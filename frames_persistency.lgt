@@ -1,8 +1,8 @@
 :- object(frames_persistency,
-	implements(monitoring)).
+	implements([frames_on_add, frames_on_update, frames_on_delete])).
 
 	:- info([
-		version is 1:0:0,
+		version is 2:0:0,
 		author is 'Paul Brown',
 		date is 2021-05-08,
 		comment is 'File based persistency for Frames using Event-Driven framework'
@@ -23,14 +23,14 @@
 		os::make_directory_path(Path)
 	)).
 
-	after(frames, add_frame(_OldFrames, Subject, _Slots, Frames), _Sender) :-
+	% Protocol predicates
+	after_add(Frames, Subject) :-
 		persist(Frames, Subject).
-	after(frames, update_frame(_OldFrames, Subject, _Slots, Frames), _Sender) :-
+	after_update(Frames, Subject) :-
 		persist(Frames, Subject).
-	after(frames, delete_frame(_OldFrames, Subject, _Slots, Frames), _Sender) :-
+	after_delete_slots(Frames, Subject) :-
 		persist(Frames, Subject).
-	after(frames, delete_frame(_OldFrames, Subject, _Frames), _Sender) :-
-		write(Subject), nl,
+	after_delete_frame(_Frames, Subject) :-
 		persist_delete(Subject).
 
     storage_path(Path) :-
