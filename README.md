@@ -13,26 +13,13 @@ It also depends on a `logtalk_library_path(storage, Path)` having been defined,
 where `Path` is the directory the files will be persisted too. See the included
 settings.lgt for an example of how to do this.
 
-Before you load frames or this plugin you must allow events as this plugin
-makes use of Logtalk's event mechanism. For example, in a `loader.lgt`:
-
-```prolog
-:- initialization((
-	set_logtalk_flag(events, allow),
-	logtalk_load([
-		frames(loader),
-		frames_persistency(loader)
-	])
-)).
-```
-
 ## How It Works
 
 Most of the actual work should just look like magic. Everytime you send a query
 to `frames::add_frame/4`, `frames::update_frame/4`, or
 `frames::delete_frame/3-4` the subject of that query will be persisted (or
-deleted as appropriate) from the disk. This is done using [Logtalks Event-driven
-programming mechanism](https://github.com/PaulBrownMagic/Frames).
+deleted as appropriate) from the disk. This is done using [the daemon mechanism
+built into frames](https://github.com/PaulBrownMagic/Frames).
 
 Additionally two useful predicates are provided:
 

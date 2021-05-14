@@ -24,13 +24,13 @@
 	)).
 
 	% Protocol predicates
-	after_add(Frames, Subject) :-
+	after_add(Frames, Subject, Frames) :-
 		persist(Frames, Subject).
-	after_update(Frames, Subject) :-
+	after_update(Frames, Subject, Frames) :-
 		persist(Frames, Subject).
-	after_delete_slots(Frames, Subject) :-
+	after_delete_slots(Frames, Subject, Frames) :-
 		persist(Frames, Subject).
-	after_delete_frame(_Frames, Subject) :-
+	after_delete_frame(Frames, Subject, Frames) :-
 		persist_delete(Subject).
 
     storage_path(Path) :-
