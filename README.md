@@ -13,6 +13,19 @@ It also depends on a `logtalk_library_path(storage, Path)` having been defined,
 where `Path` is the directory the files will be persisted too. See the included
 settings.lgt for an example of how to do this.
 
+Before you load frames or this plugin you must allow events as this plugin
+makes use of Logtalk's event mechanism. For example, in a `loader.lgt`:
+
+```prolog
+:- initialization((
+	set_logtalk_flag(events, allow),
+	logtalk_load([
+		frames(loader),
+		frames_persistency(loader)
+	])
+)).
+```
+
 ## How It Works
 
 Most of the actual work should just look like magic. Everytime you send a query
